@@ -13,6 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'auth:api'], function() {
+
+    Route::get('group', 'GroupController@index');
+
+    Route::group(['middleware' => 'my_groups'], function() {
+
+        Route::get('group/{group_id}', 'GroupController@show');
+
+    });
+
 });
